@@ -1,0 +1,9 @@
+---
+
+- name: testing command module
+  hosts: "{{server}}"
+  gather_facts: False
+  tasks:
+      - name: Test with Touch
+        command: cat {{ "fortCommands.txt"|quote }}
+        register: myOutput

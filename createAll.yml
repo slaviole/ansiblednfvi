@@ -1,0 +1,9 @@
+---
+
+- include: createVnf.yml
+
+- include: startVnf.yml
+
+- include: createClassifiers.yml
+
+- include: createSffs.yml

@@ -1,0 +1,54 @@
+---
+
+# General Variables
+server: "3906_2"
+netconf_uid: user
+netconf_pwd: ciena123
+
+# Classifier Variables
+lan_clsfr_name: VLAN-20
+lan_clsfr_vid: 20
+wan_clsfr_name: VLAN-30
+wan_clsfr_vid: 30
+
+# VNF Variables
+vnf_name: Fortinet
+cpu: 1
+memory: 1024
+image_path: ftp://10.181.35.53/fortios.qcow2
+image_size: 40000
+ftp_uid: ftp
+ftp_pwd: ftp
+
+mgmt_name: mgmt
+
+wan_name: wan0
+wan_ntwk_type: vhost
+wan_log_port: vnet-1
+
+lan_name: lan0
+lan_ntwk_type: vhost
+lan_log_port: vnet-0
+
+# SFFS Variables - LAN 
+fd_lan_name: FD-LAN
+fd_lan_mode: vpws
+fd_lan_iport_name: FD-LAN-2
+fd_lan_iport_lp: "2"
+fd_lan_hport_name: FD-LAN-vnet0
+fd_lan_hport_lp: vnet-0
+
+# SFFS Variables - WAN
+fd_wan_name: FD-WAN
+fd_wan_mode: vpws
+fd_wan_iport_name: FD-WAN-1
+fd_wan_iport_lp: "1"
+fd_wan_hport_name: FD-WAN-vnet1
+fd_wan_hport_lp: vnet-1
+
+
+
+
+
+
+

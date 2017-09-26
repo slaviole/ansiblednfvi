@@ -1,0 +1,40 @@
+---
+
+- name: provision all classifiers
+  hosts: "{{server_group}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{host_ip}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+                 <config>
+                   <classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
+                     <classifier>
+                       <name>{{wan_fd_name}}</name>
+                       <filter-operation>match-all</filter-operation>
+                       <filter-entry>
+                        <filter-parameter>classifier:vtag-stack</filter-parameter>
+            	            <vtags>
+                            <tag>1</tag>
+                            <vlan-id>{{wan_fd_vid}}</vlan-id>
+                         </vtags>
+                      </filter-entry>
+                     </classifier>
+                     <classifier>
+                       <name>{{lan_fd_name}}</name>
+                       <filter-operation>match-all</filter-operation>
+                       <filter-entry>
+                        <filter-parameter>classifier:vtag-stack</filter-parameter>
+            	            <vtags>
+                            <tag>1</tag>
+                            <vlan-id>{{lan_fd_vid}}</vlan-id>
+                         </vtags>
+                      </filter-entry>
+                     </classifier>
+                   </classifiers>
+                 </config>

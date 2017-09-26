@@ -1,0 +1,84 @@
+---
+
+- name: FD-Create Flow Domains
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+             <config>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff>
+                   <sff-name>{{fd_lan_name}}</sff-name>
+                   <sff-mode>{{fd_lan_mode}}</sff-mode>
+                 </sff>
+                 <sff>
+                   <sff-name>{{fd_wan_name}}</sff-name>
+                   <sff-mode>{{fd_wan_mode}}</sff-mode>
+                 </sff>
+               </sffs>
+             </config>
+- name: FP-Create Flow Points
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+            <config>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff operation="merge">
+                   <sff-name>{{fd_lan_name}}</sff-name>
+                   <interface>
+                     <name>{{fd_lan_iport_name}}</name>
+                     <logical-port>{{fd_lan_iport_lp}}</logical-port>
+                    <stats-enabled>true</stats-enabled>
+                    <classifier-list>{{lan_clsfr_name}}</classifier-list>
+                  </interface>
+                 </sff>
+               </sffs>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff operation="merge">
+                   <sff-name>{{fd_lan_name}}</sff-name>
+                   <interface>
+                     <name>{{fd_lan_hport_name}}</name>
+                    <logical-port>{{fd_lan_hport_lp}}</logical-port>
+                    <stats-enabled>true</stats-enabled>
+                    <classifier-list>{{lan_clsfr_name}}</classifier-list>
+                  </interface>
+                 </sff>
+               </sffs>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff operation="merge">
+                   <sff-name>{{fd_wan_name}}</sff-name>
+                   <interface>
+                     <name>{{fd_wan_hport_name}}</name>
+                    <logical-port>{{fd_wan_hport_lp}}</logical-port>
+                    <stats-enabled>true</stats-enabled>
+                    <classifier-list>{{wan_clsfr_name}}</classifier-list>
+                  </interface>
+                 </sff>
+               </sffs>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff operation="merge">
+                   <sff-name>{{fd_wan_name}}</sff-name>
+                   <interface>
+                     <name>{{fd_wan_iport_name}}</name>
+                    <logical-port>{{fd_wan_iport_lp}}</logical-port>
+                    <stats-enabled>true</stats-enabled>
+                    <classifier-list>{{wan_clsfr_name}}</classifier-list>
+                  </interface>
+                 </sff>
+               </sffs>
+            </config>

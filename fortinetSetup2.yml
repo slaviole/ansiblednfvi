@@ -1,0 +1,16 @@
+---
+
+- name: find the hal file and return the path
+  hosts: "{{server}}"
+  gather_facts: False
+  tasks:
+      - name: test virt module
+        virt:
+            name: Fortinet
+            command: get_xml
+  #      - name: Test with Touch
+  #      expect:
+  #          command: touch filename1
+  #          responses:
+  #              ~$: touch filename2
+

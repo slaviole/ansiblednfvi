@@ -1,0 +1,25 @@
+---
+
+- name: FD - Delete Flow Domains
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+             <config>
+               <sffs xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sfc">
+                 <sff operation="delete">
+                   <sff-name>{{fd_lan_name}}</sff-name>
+                 </sff>
+                 <sff operation="delete">
+                   <sff-name>{{fd_wan_name}}</sff-name>
+                 </sff>
+               </sffs>
+             </config>
+

@@ -1,0 +1,7 @@
+---
+
+- include: deleteSffs.yml
+
+- include: deleteClassifiers.yml
+
+- include: deleteVnf.yml

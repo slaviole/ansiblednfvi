@@ -1,0 +1,49 @@
+---
+
+- name: Download {{vnf_name}} VNF
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+                <sfs nc:operation="merge" xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-sf" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+                    <sf>
+                        <sf-name>{{vnf_name}}</sf-name>
+                        <sfo>
+                            <sfo-metadata>
+                                <cpus>{{cpu}}</cpus>
+                                <cpu-config>host-passthrough</cpu-config>
+                                <memory>{{memory}}</memory>
+                            </sfo-metadata>
+                            <network-interface>
+                                <name>{{mgmt_name}}</name>
+                                <network-type>default</network-type>
+                            </network-interface>
+                            <network-interface>
+                                <name>{{wan_name}}</name>
+                                <network-type>{{wan_ntwk_type}}</network-type>
+                                <logical-port>{{wan_log_port}}</logical-port>
+                            </network-interface>
+                            <network-interface>
+                                <name>{{lan_name}}</name>
+                                <network-type>{{lan_ntwk_type}}</network-type>
+                                <logical-port>{{lan_log_port}}</logical-port>
+                            </network-interface>
+                            <image-mgmt>
+                            <image-path>{{image_path}}</image-path>
+                                <image-size>{{image_size}}</image-size>
+                                <libvirt-xml-path/>
+                                <ftp-username>{{ftp_uid}}</ftp-username>
+                                <ftp-password>{{ftp_pwd}}</ftp-password>
+                            </image-mgmt>
+                        </sfo>
+                    </sf>
+                </sfs>
+             </config>

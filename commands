@@ -1,0 +1,3 @@
+# command to specify a variable file. Stil not sure it works
+
+ansible-playbook createVNF.yml --extra-vars "@fortinet_vars.yml"

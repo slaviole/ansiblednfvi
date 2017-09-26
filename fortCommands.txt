@@ -1,0 +1,5 @@
+sudo virsh console Fortinet
+/n
+admin
+reboot
+

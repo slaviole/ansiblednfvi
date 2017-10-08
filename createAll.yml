@@ -1,9 +1,9 @@
 ---
 
-- include: createVnf.yml
+- import_playbook: createVnf.yml
 
-- include: startVnf.yml
+- import_playbook: startVnf.yml
 
-- include: createClassifiers.yml
+- import_playbook: createClassifiers.yml
 
-- include: createSffs.yml
+- import_playbook: createSffs.yml

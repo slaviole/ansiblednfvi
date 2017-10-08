@@ -46,9 +46,3 @@ fd_wan_iport_lp: "2"
 fd_wan_hport_name: FD-WAN-vnet1
 fd_wan_hport_lp: vnet-1
 
-
-
-
-
-
-

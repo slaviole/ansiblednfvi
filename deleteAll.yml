@@ -1,7 +1,7 @@
 ---
 
-- include: deleteSffs.yml
+- import_playbook: deleteSffs.yml
 
-- include: deleteClassifiers.yml
+- import_playbook: deleteClassifiers.yml
 
-- include: deleteVnf.yml
+- import_playbook: deleteVnf.yml

@@ -2,3 +2,6 @@
 cots1 ansible_ssh_host=10.181.35.59 ansible_ssh_user=user ansible_ssh_pass=ciena123 ansible_become=False ansible_become_user=root ansible_become_pass=wwpciena
 3906_1 ansible_ssh_host=10.181.35.55 ansible_ssh_user=user ansible_ssh_pass=ciena123 ansible_become=False ansible_become_user=root ansible_become_pass=wwpciena
 3906_2 ansible_ssh_host=10.181.35.57 ansible_ssh_user=user ansible_ssh_pass=ciena123 ansible_become=False ansible_become_user=root ansible_become_pass=wwpciena
+
+[server:vars]
+ansible_python_interpreter=/usr/local/bin/python3

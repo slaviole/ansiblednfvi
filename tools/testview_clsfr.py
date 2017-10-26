@@ -63,20 +63,18 @@ def view_sffs(obj):
     # This is a placeholder
     pass
 
-with manager.connect(host='10.181.35.57',
-                         port=830,
-                         username='user',
-                         password='ciena123',
-                         hostkey_verify=False,
-                         allow_agent=False,
-                         look_for_keys=False
-                         ) as netconf_manager:
-    
-#    data = netconf_manager.get_config(source='running')
-    data = netconf_manager.get()
-    data_str = str(data)
-
-# The next bit parses the subtree to extract the relevant parts for display. Should this be a function?
-dnfvi_obj = untangle.parse(data_str)
-view_clsfr(dnfvi_obj)
-#view_sfs(dnfvi_obj)
+if __name__ == "__main__":
+    with manager.connect(host='10.181.35.57',
+                             port=830,
+                             username='user',
+                             password='ciena123',
+                             hostkey_verify=False,
+                             allow_agent=False,
+                             look_for_keys=False
+                             ) as netconf_manager:
+        
+        data = netconf_manager.get()
+        data_str = str(data)
+    dnfvi_obj = untangle.parse(data_str)
+    view_clsfr(dnfvi_obj)
+    #view_sfs(dnfvi_obj)

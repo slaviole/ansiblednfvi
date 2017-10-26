@@ -79,4 +79,4 @@ with manager.connect(host='10.181.35.57',
 # The next bit parses the subtree to extract the relevant parts for display. Should this be a function?
 dnfvi_obj = untangle.parse(data_str)
 view_clsfr(dnfvi_obj)
-view_sfs(dnfvi_obj)
+#view_sfs(dnfvi_obj)

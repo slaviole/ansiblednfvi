@@ -16,7 +16,6 @@
                    <classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
                      <classifier operation="merge">
                        <name>{{wan_clsfr_name}}</name>
-                       <filter-operation>match-all</filter-operation>
                        <filter-entry>
                         <filter-parameter>classifier:vtag-stack</filter-parameter>
             	            <vtags>
@@ -27,7 +26,6 @@
                      </classifier>
                      <classifier operation="merge">
                        <name>{{lan_clsfr_name}}</name>
-                       <filter-operation>match-all</filter-operation>
                        <filter-entry>
                         <filter-parameter>classifier:vtag-stack</filter-parameter>
             	            <vtags>

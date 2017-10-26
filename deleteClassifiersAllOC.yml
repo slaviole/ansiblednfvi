@@ -1,0 +1,20 @@
+---
+
+- name: Delete all classifiers
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830
+          hostkey_verify: False
+          xml:
+                 <config>
+                   <classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
+                     <classifier operation="delete">
+                     </classifier>
+                   </classifiers>
+                 </config>

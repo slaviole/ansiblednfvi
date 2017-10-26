@@ -14,7 +14,7 @@
           xml:
                  <config>
                    <classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
-                     <classifier>
+                     <classifier operation="merge">
                        <name>{{wan_clsfr_name}}</name>
                        <filter-operation>match-all</filter-operation>
                        <filter-entry>
@@ -25,7 +25,7 @@
                          </vtags>
                       </filter-entry>
                      </classifier>
-                     <classifier>
+                     <classifier operation="merge">
                        <name>{{lan_clsfr_name}}</name>
                        <filter-operation>match-all</filter-operation>
                        <filter-entry>

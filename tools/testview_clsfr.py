@@ -31,31 +31,28 @@ def view_clsfr(obj):
 def view_sfs(obj):
     try:
         line = 30 * "*"
-
         num_sfs = len(obj.rpc_reply.data.sfs.sf)
-        print("")
-        print(line)
-
-        print(obj.rpc_reply.data.sfs.sf.sf_name.cdata)
-        print(line)
-        print("CPUs Assigned: ", obj.rpc_reply.data.sfs.sf.sf_state.num_cpus.cdata)
-        print("Mem Allocated: ", obj.rpc_reply.data.sfs.sf.sf_state.mem_allocated.cdata)
-        print("Admin State:   ", obj.rpc_reply.data.sfs.sf.sf_operation.state.cdata)
-        print("Operational State:   ", obj.rpc_reply.data.sfs.sf.sf_state.oper_state.cdata)
-        print("VNC Console:   ", obj.rpc_reply.data.sfs.sf.sf_state.console.vnc_port.cdata)
-        num_if = len(obj.rpc_reply.data.sfs.sf.sfo.network_interface)
-
-        for if_num in range(num_if):
+        for item in range(num_sfs):
+            print("")
+            print("")
+            print(obj.rpc_reply.data.sfs.sf[item].sf_name.cdata)
             print(line)
-            if_name = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].name.cdata
-            if_type = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].network_type.cdata
-            print(if_name)
-            print("Interface Type: ",if_type)
-            if not if_type == "default":
-                log_port = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].logical_port.cdata
-                print("Logical Port: ", log_port)
-
-        print(line)
+            print("CPUs Assigned: ", obj.rpc_reply.data.sfs.sf[item].sf_state.num_cpus.cdata)
+            print("Mem Allocated: ", obj.rpc_reply.data.sfs.sf[item].sf_state.mem_allocated.cdata)
+            print("Admin State:   ", obj.rpc_reply.data.sfs.sf[item].sf_operation.state.cdata)
+            print("Operational State:   ", obj.rpc_reply.data.sfs.sf[item].sf_state.oper_state.cdata)
+            print("VNC Console:   ", obj.rpc_reply.data.sfs.sf[item].sf_state.console.vnc_port.cdata)
+            num_if = len(obj.rpc_reply.data.sfs.sf[item].sfo.network_interface)
+            for if_num in range(num_if):
+                print(line)
+                if_name = obj.rpc_reply.data.sfs.sf[item].sfo.network_interface[if_num].name.cdata
+                if_type = obj.rpc_reply.data.sfs.sf[item].sfo.network_interface[if_num].network_type.cdata
+                print(if_name)
+                print("Interface Type: ",if_type)
+                if not if_type == "default":
+                    log_port = obj.rpc_reply.data.sfs.sf[item].sfo.network_interface[if_num].logical_port.cdata
+                    print("Logical Port: ", log_port)
+            print(line)
     except:
         print("No SFS's found")
 
@@ -76,5 +73,5 @@ if __name__ == "__main__":
         data = netconf_manager.get()
         data_str = str(data)
     dnfvi_obj = untangle.parse(data_str)
-    view_clsfr(dnfvi_obj)
-    #view_sfs(dnfvi_obj)
+    #view_clsfr(dnfvi_obj)
+    view_sfs(dnfvi_obj)

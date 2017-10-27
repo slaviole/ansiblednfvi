@@ -26,7 +26,7 @@ def view_clsfr(obj):
             except:
                 pass
     except:
-        print("No Classifiers found")
+        print("Issue encountered viewing Classifiers. Possibly no Classifiers found.")
 
 def view_sfs(obj):
     try:
@@ -54,11 +54,27 @@ def view_sfs(obj):
                     print("Logical Port: ", log_port)
             print(line)
     except:
-        print("No SFS's found")
+        print("Issue encountered viewing SFs. Possibly no SFs found.")
 
 def view_sffs(obj):
-    # This is a placeholder
-    pass
+    try:
+        num_sffs = len(obj.rpc_reply.data.sffs.sff)
+        for FD in range(num_sffs):
+            print()
+            print('SFF Name: ', obj.rpc_reply.data.sffs.sff[FD].children[0].cdata)
+            print('SFF Mode:', obj.rpc_reply.data.sffs.sff[FD].children[1].cdata)
+            #num_FP = len(obj.rpc_reply.data.sffs.sff[FD].children[2].children)
+            num_FP = len(obj.rpc_reply.data.sffs.sff[FD].children)
+            #print(num_FP)
+            for FP in range(2,num_FP): 
+                print('  ', 'Flow Point Name: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[0].cdata)
+                print('    ', 'Logical Port: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[1].cdata)
+                num_clsfr = len(obj.rpc_reply.data.sffs.sff[FD].children[FP].children)
+                # Minus 2 in the range below is to avoid the stats-enabled tag and the last empty tag
+                for clsfr in range(2,num_clsfr-2): 
+                    print('    ', 'Classifier: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[clsfr].cdata)
+    except:
+        print("Issue encountered viewing SFFS service chain(s). Possibly no SFFs")
 
 if __name__ == "__main__":
     with manager.connect(host='10.181.35.57',
@@ -71,7 +87,8 @@ if __name__ == "__main__":
                              ) as netconf_manager:
         
         data = netconf_manager.get()
-        data_str = str(data)
+    data_str = str(data)
     dnfvi_obj = untangle.parse(data_str)
     #view_clsfr(dnfvi_obj)
-    view_sfs(dnfvi_obj)
+    #view_sfs(dnfvi_obj)
+    view_sffs(dnfvi_obj)

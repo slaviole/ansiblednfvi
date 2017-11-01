@@ -2,6 +2,8 @@
 
 from ncclient import manager
 import untangle
+import argparse
+import yaml
 
 def view_clsfr(obj):
     try:
@@ -63,9 +65,7 @@ def view_sffs(obj):
             print()
             print('SFF Name: ', obj.rpc_reply.data.sffs.sff[FD].children[0].cdata)
             print('SFF Mode:', obj.rpc_reply.data.sffs.sff[FD].children[1].cdata)
-            #num_FP = len(obj.rpc_reply.data.sffs.sff[FD].children[2].children)
             num_FP = len(obj.rpc_reply.data.sffs.sff[FD].children)
-            #print(num_FP)
             for FP in range(2,num_FP): 
                 print('  ', 'Flow Point Name: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[0].cdata)
                 print('    ', 'Logical Port: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[1].cdata)
@@ -76,11 +76,37 @@ def view_sffs(obj):
     except:
         print("Issue encountered viewing SFFS service chain(s). Possibly no SFFs")
 
-if __name__ == "__main__":
-    with manager.connect(host='10.181.35.57',
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename", help="Provide a filename to get device credentials")
+    parser.add_argument("option", help="Provide view option (clsfr,sfs,sffs)")
+    args = parser.parse_args()
+    if args.option != 'sfs' and args.option != 'sffs' and args.option != 'clsfr':
+        print("Incorrect 2nd argument. Must be one of sfs, sffs, clsfr")
+        return
+
+    with open(args.filename) as f:
+        ymlmap = yaml.safe_load(f)
+        server = ymlmap['server']
+
+    with open('hosts') as f:
+        f.seek(0)
+        while True:
+            line = f.readline()
+            lst = line.split()
+            if lst[0] == server:
+                ip_lst = lst[1].split("=")
+                ip = ip_lst[1]
+                user_lst = lst[2].split("=")
+                user = user_lst[1]
+                pwd_lst = lst[3].split("=")
+                pwd = pwd_lst[1]
+                break
+
+    with manager.connect(host=ip,
                              port=830,
-                             username='user',
-                             password='ciena123',
+                             username=user,
+                             password=pwd,
                              hostkey_verify=False,
                              allow_agent=False,
                              look_for_keys=False
@@ -89,6 +115,17 @@ if __name__ == "__main__":
         data = netconf_manager.get()
     data_str = str(data)
     dnfvi_obj = untangle.parse(data_str)
-    #view_clsfr(dnfvi_obj)
-    #view_sfs(dnfvi_obj)
-    view_sffs(dnfvi_obj)
+    if args.option == 'clsfr':
+        print("Getting Classifiers")
+        view_clsfr(dnfvi_obj)
+    elif args.option == 'sfs':
+        print("Getting VNF's/SF's")
+        view_sfs(dnfvi_obj)
+    else:
+        print("Getting SFF's (Service Chain)")
+        view_sffs(dnfvi_obj)
+
+
+if __name__ == "__main__":
+    main()
+

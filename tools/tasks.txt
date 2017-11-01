@@ -1,6 +1,4 @@
 - Add the ability to support arguments to specify yaml file and what needs to be viewed(Classifier, sfs, sffs, all)
-- Troubleshoot viewSFFS code to make it work right in Jupyter
-- Once viewSFFS working right in Jupyter add it to the python viewDnfvi.py tool
 
 
 

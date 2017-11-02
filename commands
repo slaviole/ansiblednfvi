@@ -1,3 +1,8 @@
 # command syntax to specify a variable file
 
 ansible-playbook createVNF.yml --extra-vars "@fortinet_vars.yml"
+
+
+# viewDnfvi.py command syntax
+
+./viewdnfvi.py vyos_vars.yml sfs/sffs/clsfr

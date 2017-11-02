@@ -28,7 +28,7 @@ def view_clsfr(obj):
             except:
                 pass
     except:
-        print("Issue encountered viewing Classifiers. Possibly no Classifiers found.")
+        print("No Classifiers found.")
 
 def view_sfs(obj):
     try:
@@ -57,7 +57,7 @@ def view_sfs(obj):
                     print("Logical Port: ", log_port)
             print(line)
     except:
-        print("Issue encountered viewing SFs. Possibly no SFs found.")
+        print("No SFs found.")
 
 def view_sffs(obj):
     try:
@@ -75,7 +75,7 @@ def view_sffs(obj):
                 for clsfr in range(2,num_clsfr-2): 
                     print('    ', 'Classifier: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[clsfr].cdata)
     except:
-        print("Issue encountered viewing SFFS service chain(s). Possibly no SFFs")
+        print("No SFFs found")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -117,13 +117,13 @@ def main():
     data_str = str(data)
     dnfvi_obj = untangle.parse(data_str)
     if args.option == 'clsfr':
-        print("Getting Classifiers")
+        print("Searching for Classifiers")
         view_clsfr(dnfvi_obj)
     elif args.option == 'sfs':
-        print("Getting VNF's/SF's")
+        print("Searching for VNF's/SF's")
         view_sfs(dnfvi_obj)
     else:
-        print("Getting SFF's (Service Chain)")
+        print("Searching SFF's (Service Chain build)")
         view_sffs(dnfvi_obj)
 
 

@@ -33,27 +33,26 @@ def view_clsfr(obj):
 def view_sfs(obj):
     try:
         line = 30 * "*"
-        #num_sfs = len(obj.rpc_reply.data.sfs.sf)
-        num_sfs = 1
-        for item in range(num_sfs):
+        num_sfs = len(obj.rpc_reply.data.sfs)
+        for item in obj.rpc_reply.data.sfs.sf:
             print("")
             print("")
-            print(obj.rpc_reply.data.sfs.sf.sf_name.cdata)
+            print(item.sf_name.cdata)
             print(line)
-            print("CPUs Assigned: ", obj.rpc_reply.data.sfs.sf.sf_state.num_cpus.cdata)
-            print("Mem Allocated: ", obj.rpc_reply.data.sfs.sf.sf_state.mem_allocated.cdata)
-            print("Admin State:   ", obj.rpc_reply.data.sfs.sf.sf_operation.state.cdata)
-            print("Operational State:   ", obj.rpc_reply.data.sfs.sf.sf_state.oper_state.cdata)
-            print("VNC Console:   ", obj.rpc_reply.data.sfs.sf.sf_state.console.vnc_port.cdata)
-            num_if = len(obj.rpc_reply.data.sfs.sf.sfo.network_interface)
-            for if_num in range(num_if):
+            print("CPUs Assigned: ", item.sf_state.num_cpus.cdata)
+            print("Mem Allocated: ", item.sf_state.mem_allocated.cdata)
+            print("Admin State:   ", item.sf_operation.state.cdata)
+            print("Operational State:   ", item.sf_state.oper_state.cdata)
+            print("VNC Console:   ", item.sf_state.console.vnc_port.cdata)
+            num_if = len(item.sfo.network_interface)
+            for intf in item.sfo.network_interface:
                 print(line)
-                if_name = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].name.cdata
-                if_type = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].network_type.cdata
+                if_name = intf.name.cdata
+                if_type = intf.network_type.cdata
                 print(if_name)
                 print("Interface Type: ",if_type)
                 if not if_type == "default":
-                    log_port = obj.rpc_reply.data.sfs.sf.sfo.network_interface[if_num].logical_port.cdata
+                    log_port = intf.logical_port.cdata
                     print("Logical Port: ", log_port)
             print(line)
     except:

@@ -9,16 +9,13 @@ def view_clsfr(obj):
     try:
         num_clsfr = len(obj.rpc_reply.data.classifiers.classifier)
         for clsfr in range(num_clsfr):
-            # See if I can simplify and use names instead of indices. particularly for Classifer Name
             print('')
             print("Classifier Name:     ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[0].cdata)
             print("  filter-parameter:  ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].filter_parameter.cdata)
             print("  logical-not:       ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].logical_not.cdata)
             num_chld = len(obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].children[2].children)
-            #print(num_chld). used this to  determine only a single item below is used.
             for item in range(num_chld): 
                 try:
-                    # Only one of these items returns a value. Troubleshoot and simplify if possible
                     print("    Outer Tag Level: ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[item].children[2].tag.cdata)
                     print("    VLAN ID:         ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[item].children[2].vlan_id.cdata)
                 except:

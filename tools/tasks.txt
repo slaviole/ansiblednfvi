@@ -1,6 +1,0 @@
-- Add the ability to support arguments to specify yaml file and what needs to be viewed(Classifier, sfs, sffs, all)
-
-
-
-
-- Once the whole thing is working correctly add it to my environment variable path so I can use it without specifying the path

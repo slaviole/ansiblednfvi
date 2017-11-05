@@ -9,16 +9,16 @@ def view_clsfr(obj):
     try:
         for clsfr in obj.rpc_reply.data.classifiers.classifier:
             print('')
-            print("Classifier Name:     ", clsfr.children[0].cdata)
+            print("Classifier Name:     ", clsfr.name.cdata)
             print("  filter-parameter:  ", clsfr.filter_entry.filter_parameter.cdata)
-            print("  logical-not:       ", clsfr.children[1].logical_not.cdata)
+            print("  logical-not:       ", clsfr.filter_entry.logical_not.cdata)
             try:
-                print("    Outer Tag Level: ", clsfr.children[1].children[2].tag.cdata)
-                print("    VLAN ID:         ", clsfr.children[1].children[2].vlan_id.cdata)
+                print("    Outer Tag Level: ", clsfr.filter_entry.vtags.tag.cdata)
+                print("    VLAN ID:         ", clsfr.filter_entry.vtags.vlan_id.cdata)
             except:
                 pass
             try:
-                print("    Untagged-excl-pri-tagged: ",clsfr.children[1].untagged_exclude_priority_tagged.cdata)
+                print("    Untagged-excl-pri-tagged: ",clsfr.filter_entry.untagged_exclude_priority_tagged.cdata)
             except:
                 pass
     except:

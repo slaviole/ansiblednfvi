@@ -7,21 +7,18 @@ import yaml
 
 def view_clsfr(obj):
     try:
-        num_clsfr = len(obj.rpc_reply.data.classifiers.classifier)
-        for clsfr in range(num_clsfr):
+        for clsfr in obj.rpc_reply.data.classifiers.classifier:
             print('')
-            print("Classifier Name:     ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[0].cdata)
-            print("  filter-parameter:  ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].filter_parameter.cdata)
-            print("  logical-not:       ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].logical_not.cdata)
-            num_chld = len(obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].children[2].children)
-            for item in range(num_chld): 
-                try:
-                    print("    Outer Tag Level: ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[item].children[2].tag.cdata)
-                    print("    VLAN ID:         ", obj.rpc_reply.data.classifiers.classifier[clsfr].children[item].children[2].vlan_id.cdata)
-                except:
-                    pass
+            print("Classifier Name:     ", clsfr.children[0].cdata)
+            print("  filter-parameter:  ", clsfr.filter_entry.filter_parameter.cdata)
+            print("  logical-not:       ", clsfr.children[1].logical_not.cdata)
             try:
-                print("    Untagged-excl-pri-tagged: ",obj.rpc_reply.data.classifiers.classifier[clsfr].children[1].untagged_exclude_priority_tagged.cdata) 
+                print("    Outer Tag Level: ", clsfr.children[1].children[2].tag.cdata)
+                print("    VLAN ID:         ", clsfr.children[1].children[2].vlan_id.cdata)
+            except:
+                pass
+            try:
+                print("    Untagged-excl-pri-tagged: ",clsfr.children[1].untagged_exclude_priority_tagged.cdata)
             except:
                 pass
     except:

@@ -54,19 +54,16 @@ def view_sfs(obj):
 
 def view_sffs(obj):
     try:
-        num_sffs = len(obj.rpc_reply.data.sffs.sff)
-        for FD in range(num_sffs):
+        for fd in obj.rpc_reply.data.sffs.sff:
             print()
-            print('SFF Name: ', obj.rpc_reply.data.sffs.sff[FD].children[0].cdata)
-            print('SFF Mode:', obj.rpc_reply.data.sffs.sff[FD].children[1].cdata)
-            num_FP = len(obj.rpc_reply.data.sffs.sff[FD].children)
-            for FP in range(2,num_FP): 
-                print('  ', 'Flow Point Name: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[0].cdata)
-                print('    ', 'Logical Port: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[1].cdata)
-                num_clsfr = len(obj.rpc_reply.data.sffs.sff[FD].children[FP].children)
-                # Minus 2 in the range below is to avoid the stats-enabled tag and the last empty tag
-                for clsfr in range(2,num_clsfr-2): 
-                    print('    ', 'Classifier: ', obj.rpc_reply.data.sffs.sff[FD].children[FP].children[clsfr].cdata)
+            print('SFF Name: ', fd.sff_name.cdata)
+            print('SFF Mode:', fd.sff_mode.cdata)
+            for fp in fd.interface:    
+                print('  ', 'Flow Point Name: ', fp.name.cdata)
+                print('    ', 'Logical Port: ', fp.logical_port.cdata)
+                for clsfr in fp.classifier_list: 
+                    print('    ', 'Classifier: ', clsfr.cdata)
+
     except:
         print("No SFFs found")
 

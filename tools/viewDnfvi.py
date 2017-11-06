@@ -5,7 +5,12 @@ import untangle
 import argparse
 import yaml
 
+
 def view_clsfr(obj):
+    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+        of interest for Classifer tags.
+        No return value.
+    '''
     try:
         for clsfr in obj.rpc_reply.data.classifiers.classifier:
             print('')
@@ -24,7 +29,12 @@ def view_clsfr(obj):
     except:
         print("No Classifiers found.")
 
+
 def view_sfs(obj):
+    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+        of interest for sfs(i.e. vnf) tags.
+        No return value.
+    '''
     try:
         line = 30 * "*"
         num_sfs = len(obj.rpc_reply.data.sfs)
@@ -52,7 +62,12 @@ def view_sfs(obj):
     except:
         print("No SFs found.")
 
+
 def view_sffs(obj):
+    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+        of interest for sffs(i.e. service chains) tags.
+        No return value.
+    '''
     try:
         for fd in obj.rpc_reply.data.sffs.sff:
             print()
@@ -63,23 +78,18 @@ def view_sffs(obj):
                 print('    ', 'Logical Port: ', fp.logical_port.cdata)
                 for clsfr in fp.classifier_list: 
                     print('    ', 'Classifier: ', clsfr.cdata)
-
     except:
         print("No SFFs found")
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("filename", help="Provide a filename to get device credentials")
-    parser.add_argument("option", help="Provide view option (clsfr,sfs,sffs)")
-    args = parser.parse_args()
-    if args.option != 'sfs' and args.option != 'sffs' and args.option != 'clsfr':
-        print("Incorrect 2nd argument. Must be one of sfs, sffs, clsfr")
-        return
 
-    with open(args.filename) as f:
+def get_ansible_logindata(fn):
+    ''' Takes an ansible-playbook filename as input, extracts the server name from the file,
+        uses that server name to look up the ip, user, and pwd from the ansible hosts file.
+        Returns a dict with the ip, user, and pwd.
+    '''
+    with open(fn) as f:
         ymlmap = yaml.safe_load(f)
         server = ymlmap['server']
-
     with open('hosts') as f:
         f.seek(0)
         while True:
@@ -93,11 +103,18 @@ def main():
                 pwd_lst = lst[3].split("=")
                 pwd = pwd_lst[1]
                 break
+    ansible_logindata = {'ip': ip, 'user': user, 'pwd': pwd}
+    return ansible_logindata
 
-    with manager.connect(host=ip,
+
+def get_nc_obj(nc_creds):
+    ''' Takes D-NFVI server login credentials, makes a Netconf get for all config and oper data.
+        Returns an Untangle object with the parsed xml tree.
+    '''
+    with manager.connect(host=nc_creds['ip'],
                              port=830,
-                             username=user,
-                             password=pwd,
+                             username=nc_creds['user'],
+                             password=nc_creds['pwd'],
                              hostkey_verify=False,
                              allow_agent=False,
                              look_for_keys=False
@@ -105,7 +122,28 @@ def main():
         
         data = netconf_manager.get()
     data_str = str(data)
-    dnfvi_obj = untangle.parse(data_str)
+    d_obj = untangle.parse(data_str)
+    return d_obj
+
+
+def main():
+    ''' Parses command line argument for ansible playbook filename and D-NFVI tag to view.
+        Calls ansible_login_data to get credentials. Uses those credentials to call get_nc_obj
+        and return an untangle tree object that is easily parses.
+        Based on arg.option calls the appropriate function to display the D-NFVI tag.
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename", help="Provide an ansible-playbook filename to get device credentials")
+    parser.add_argument("option", help="Provide view option ( one of clsfr,sfs,sffs)")
+    args = parser.parse_args()
+    if args.option != 'sfs' and args.option != 'sffs' and args.option != 'clsfr':
+        print("Incorrect 2nd argument. Must be one of sfs, sffs, clsfr")
+        return
+
+    creds = get_ansible_logindata(args.filename)
+
+    dnfvi_obj = get_nc_obj(creds)
+
     if args.option == 'clsfr':
         print("Searching for Classifiers")
         view_clsfr(dnfvi_obj)

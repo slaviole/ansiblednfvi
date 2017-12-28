@@ -73,10 +73,10 @@ def view_sffs(obj):
             print()
             print('SFF Name: ', fd.sff_name.cdata)
             print('SFF Mode:', fd.sff_mode.cdata)
-            for fp in fd.interface:    
+            for fp in fd.interface:
                 print('  ', 'Flow Point Name: ', fp.name.cdata)
                 print('    ', 'Logical Port: ', fp.logical_port.cdata)
-                for clsfr in fp.classifier_list: 
+                for clsfr in fp.classifier_list:
                     print('    ', 'Classifier: ', clsfr.cdata)
     except:
         print("No SFFs found")
@@ -119,7 +119,7 @@ def get_nc_obj(nc_creds):
                              allow_agent=False,
                              look_for_keys=False
                              ) as netconf_manager:
-        
+
         data = netconf_manager.get()
     data_str = str(data)
     d_obj = untangle.parse(data_str)

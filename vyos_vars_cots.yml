@@ -1,7 +1,7 @@
 ---
 
 # General Variables
-server: "cots1"
+server: "3906_2"
 netconf_uid: user
 netconf_pwd: ciena123
 

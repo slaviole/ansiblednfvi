@@ -12,11 +12,11 @@ wan_clsfr_name: VLAN-20
 wan_clsfr_vid: 20
 
 # VNF Variables
-vnf_name: Vyos1
+vnf_name: SilverPeak
 cpu: 4
 memory: 6144
-image_path: ftp://10.181.35.53/vyos.qcow2
-image_size: 361
+image_path: ftp://10.181.35.53/sdwan.qcow2
+image_size: 30000
 ftp_uid: ftp
 ftp_pwd: ftp
 

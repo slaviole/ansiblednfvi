@@ -1,0 +1,9 @@
+---
+
+- name: test custom can_reach module
+  hosts: ftp_server
+  #connection: local
+  gather_facts: True
+  tasks:
+      - name: check if host can reach my ftp server
+        can_reach: host=ftp_server port=23 timeout=3

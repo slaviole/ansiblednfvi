@@ -1,0 +1,24 @@
+<config>
+<classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
+ <classifier operation="merge">
+   <name>{{wan_clsfr_name}}</name>
+   <filter-entry>
+    <filter-parameter>classifier:vtag-stack</filter-parameter>
+        <vtags>
+        <tag>1</tag>
+        <vlan-id>{{wan_clsfr_vid}}</vlan-id>
+     </vtags>
+  </filter-entry>
+ </classifier>
+ <classifier operation="merge">
+   <name>{{lan_clsfr_name}}</name>
+   <filter-entry>
+    <filter-parameter>classifier:vtag-stack</filter-parameter>
+        <vtags>
+        <tag>1</tag>
+        <vlan-id>{{lan_clsfr_vid}}</vlan-id>
+     </vtags>
+  </filter-entry>
+ </classifier>
+</classifiers>
+</config>

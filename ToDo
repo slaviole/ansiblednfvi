@@ -1,0 +1,18 @@
+1. Test createClassifiers using j2 file while still using arguments file
+   to launch the playbook. This modularizes and I might even be able to
+   have the create delete versions in one Jinja2 xml file. 
+
+2. Test the use of path in playbook to specify where the ansible-playbook
+   tool is located. This will save having to type "ansible-playbook" every
+   time when launching a play
+
+3. Look into aliasing to improve on command syntax to launch a playbook.
+   Shoould be something like:
+        ./createClassifiers.yml vyos_vars.yml
+        # The above implies that the server information is still in the
+        # vars file which may not be so bad if the syntax is cleaner.
+
+4. Arrange Jinja2 templates and var files to that they can accomodate a
+   flexible number of Classifiers, VNF's, and resultant service chain.
+   This will require Jinja2 programmatic logic to loop through lists in
+   the yaml file.

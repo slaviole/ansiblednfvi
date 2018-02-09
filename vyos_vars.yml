@@ -1,17 +1,19 @@
 ---
 
-# General Variables
-server: "cots1"
-netconf_uid: user
-netconf_pwd: ciena123
+# General Variables 
+server: "cots1" 
+netconf_uid: user # move to hosts file group_vars
+netconf_pwd: ciena123 # move to Hosts file group_vars
 
 # Classifier Variables
+# Arange this as a list so that Jinja2 loops through it
 lan_clsfr_name: VLAN-10
 lan_clsfr_vid: 10
 wan_clsfr_name: VLAN-20
 wan_clsfr_vid: 20
 
 # VNF Variables
+# Arange this as a list so that Jinja2 loops through it
 vnf_name: Vyos1
 cpu: 4
 memory: 6144
@@ -29,6 +31,10 @@ wan_log_port: vnet-1
 lan_name: eth1
 lan_ntwk_type: vhost
 lan_log_port: vnet-0
+
+# Arange this whole section so that it can loop through and create
+# links to the VNF ports to properly create the service chain. This 
+# will likely require a lot of Jinja2 programming.
 
 # SFFS Variables - LAN 
 fd_lan_name: FD-LAN

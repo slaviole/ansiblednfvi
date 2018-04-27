@@ -7,7 +7,7 @@ import yaml
 
 
 def view_clsfr(obj):
-    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+    ''' Takes an Untangle Object as Input, parses it, and prints out Field names and values
         of interest for Classifer tags.
         No return value.
     '''
@@ -31,7 +31,7 @@ def view_clsfr(obj):
 
 
 def view_sfs(obj):
-    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+    ''' Takes an Untangle Object as Input, parses it, and prints out Field names and values
         of interest for sfs(i.e. vnf) tags.
         No return value.
     '''
@@ -64,7 +64,7 @@ def view_sfs(obj):
 
 
 def view_sffs(obj):
-    ''' Takes an Untagle Object as Input, parses it, and prints out Field names and values
+    ''' Takes an Untangle Object as Input, parses it, and prints out Field names and values
         of interest for sffs(i.e. service chains) tags.
         No return value.
     '''

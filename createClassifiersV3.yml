@@ -1,0 +1,28 @@
+---
+
+- name: Provision all classifiers
+  hosts: "3906_2"
+  connection: local
+  gather_facts: false
+  tasks:
+      - netconf_config:
+          host: "10.181.35.57"
+          username: "user"
+          password: "ciena123"
+          port: 830
+          hostkey_verify: False
+          xml:
+              <config>
+                 <classifiers xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
+                      <classifier operation="merge">
+                          <name>VLAN-40</name>
+                          <filter-entry>
+                              <filter-parameter xmlns:classifier="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">classifier:vtag-stack</filter-parameter>
+                              <vtags>
+                                  <tag>1</tag>
+                                  <vlan-id>40</vlan-id>
+                              </vtags>
+                          </filter-entry>
+                      </classifier>
+                  </classifiers>
+              </config>

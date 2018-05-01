@@ -7,14 +7,14 @@ netconf_pwd: ciena123 # move to Hosts file group_vars
 
 # Classifier Variables
 # Arange this as a list so that Jinja2 loops through it
-lan_clsfr_name: VLAN-10
-lan_clsfr_vid: 10
-wan_clsfr_name: VLAN-20
-wan_clsfr_vid: 20
+lan_clsfr_name: VLAN-30
+lan_clsfr_vid: 30
+wan_clsfr_name: VLAN-40
+wan_clsfr_vid: 40
 
 # VNF Variables
 # Arange this as a list so that Jinja2 loops through it
-vnf_name: Vyos1
+vnf_name: Vyos
 cpu: 4
 memory: 6144
 image_path: ftp://10.181.35.53/vyos.qcow2

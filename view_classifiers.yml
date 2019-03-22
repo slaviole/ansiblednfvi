@@ -1,0 +1,12 @@
+---
+
+- name: view all classifiers
+  hosts: "{{server}}"
+  connection: local
+  gather_facts: false
+  tasks:
+      - view_classifiers:
+          host: "{{ansible_ssh_host}}"
+          username: "{{netconf_uid}}"
+          password: "{{netconf_pwd}}"
+          port: 830

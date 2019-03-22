@@ -2,8 +2,8 @@
 
 # General Variables
 server: "3906_2"
-netconf_uid: user # move to hosts file group_vars
-netconf_pwd: ciena123 # move to Hosts file group_vars
+netconf_uid: user
+netconf_pwd: ciena123
 
 # Classifier Variables
 # Arange this as a list so that Jinja2 loops through it
